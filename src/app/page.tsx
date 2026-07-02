@@ -10,6 +10,13 @@ export default function Home() {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3 animate-pulse-slow z-0"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#5C4FFF]/20 rounded-full blur-[120px] pointer-events-none translate-y-1/3 -translate-x-1/3 z-0"></div>
 
+      {/* Rocket Launch Animation */}
+      <div className="fixed inset-0 pointer-events-none z-[100] overflow-hidden">
+        <div className="absolute text-[40px] sm:text-[60px] animate-rocket drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+          🚀
+        </div>
+      </div>
+
       {/* Main Content Area */}
       <div className="container mx-auto px-4 lg:px-6 pt-4 pb-8 lg:pb-12 flex flex-col justify-center h-full relative z-10 max-w-7xl">
 
@@ -96,8 +103,19 @@ export default function Home() {
           {/* Right Column: Submission Form */}
           <div className="w-full lg:w-[45%] flex flex-col justify-center animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
 
+            {/* Top Image */}
+            <div className="relative w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto h-40 sm:h-48 rounded-t-3xl overflow-hidden shadow-2xl border-b-4 border-[#5C4FFF]">
+              <Image
+                src="/pc-guys.jpg"
+                alt="Tech Students"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#181059] to-transparent opacity-40"></div>
+            </div>
+
             {/* Submission Card */}
-            <div className="bg-white text-[#181059] rounded-3xl p-4 sm:p-5 lg:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden flex flex-col justify-center w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto">
+            <div className="bg-white text-[#181059] rounded-b-3xl p-4 sm:p-5 lg:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden flex flex-col justify-center w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#5C4FFF]/10 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/2"></div>
 
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-black mb-1 text-[#181059] tracking-tight">Claim 50% off</h2>

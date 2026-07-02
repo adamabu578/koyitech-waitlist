@@ -10,6 +10,25 @@
   --animate-fade-in: fade-in 1s ease-out forwards;
   --animate-pulse-slow: pulse-slow 4s ease-in-out infinite alternate;
   --animate-marquee-vertical: marquee-vertical 15s linear infinite;
+  --animate-rocket: rocket-shoot 40s linear infinite;
+}
+
+@keyframes rocket-shoot {
+  0% {
+    transform: translate(-20vw, 15vh) rotate(45deg);
+  }
+  49.9% {
+    transform: translate(120vw, 15vh) rotate(45deg);
+  }
+  50% {
+    transform: translate(120vw, 30vh) rotate(-135deg);
+  }
+  99.9% {
+    transform: translate(-20vw, 30vh) rotate(-135deg);
+  }
+  100% {
+    transform: translate(-20vw, 15vh) rotate(45deg);
+  }
 }
 
 @keyframes marquee-vertical {
