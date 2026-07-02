@@ -6,10 +6,10 @@ import { createClient } from '@supabase/supabase-js';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email } = body;
+    const { email, name, phone } = body;
 
-    if (!email) {
-      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+    if (!email || !name) {
+      return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
     }
 
     // 1. Insert into Supabase (if configured)
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       
       const { error: dbError } = await supabase
         .from('waitlist')
-        .insert([{ email }]);
+        .insert([{ email, name, phone }]);
 
       if (dbError) {
         console.error('Supabase insertion error:', dbError);

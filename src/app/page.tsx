@@ -17,12 +17,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="container mx-auto px-4 lg:px-6 pt-4 pb-8 lg:pb-12 flex flex-col justify-center h-full relative z-10 max-w-7xl">
-
-        {/* Header / Logo */}
-        <header className="mb-2 lg:mb-4 animate-fade-in w-full flex justify-between items-center shrink-0">
-          <div className="relative w-32 sm:w-48 lg:w-[240px]">
+      {/* Header / Logo */}
+      <header className="w-full px-4 lg:px-8 pt-4 pb-2 z-50 relative">
+        <div className="container mx-auto max-w-7xl animate-fade-in">
+          <div className="relative w-32 sm:w-48 lg:w-[220px]">
             <Image
               src="/logo-white.png"
               alt="Koyitech Africa"
@@ -32,20 +30,24 @@ export default function Home() {
               priority
             />
           </div>
-        </header>
+        </div>
+      </header>
 
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 lg:gap-6 z-20 w-full flex-1 min-h-0">
+      {/* Main Content Area */}
+      <div className="container mx-auto px-4 lg:px-6 pt-2 pb-4 flex flex-col justify-start relative z-10 max-w-7xl flex-1">
+
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 lg:gap-8 z-20 w-full min-h-0 pt-2 sm:pt-4">
 
           {/* Left Column: Hero Text & Timer & Tracks */}
-          <div className="w-full lg:w-[50%] flex flex-col justify-center gap-2 sm:gap-3">
+          <div className="w-full lg:w-[50%] flex flex-col justify-start gap-2 sm:gap-3">
             <div className="animate-fade-in-up" style={{ animationDelay: '100ms', animationFillMode: 'both' }}>
-              <span className="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-[#8ec63f]/20 text-[#8ec63f] text-[10px] sm:text-xs font-bold tracking-widest mb-3 border border-[#8ec63f]/30 shadow-sm uppercase">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <span className="inline-flex items-center gap-1.5 py-0.5 px-3 rounded-full bg-[#8ec63f]/20 text-[#8ec63f] text-[10px] font-bold tracking-widest mb-2 border border-[#8ec63f]/30 shadow-sm uppercase">
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                 </svg>
                 Unlock 50% Discount
               </span>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-2 leading-[1.05] text-white">
+              <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black tracking-tight mb-2 leading-[1.1] text-white">
                 Launch Your <br className="hidden sm:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#a3b1ff]">Tech Career.</span>
               </h1>
@@ -101,10 +103,10 @@ export default function Home() {
           </div>
 
           {/* Right Column: Submission Form */}
-          <div className="w-full lg:w-[45%] flex flex-col justify-center animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
+          <div className="w-full lg:w-[45%] flex flex-col justify-start animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
 
             {/* Top Image */}
-            <div className="relative w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto h-40 sm:h-48 rounded-t-3xl overflow-hidden shadow-2xl border-b-4 border-[#5C4FFF]">
+            <div className="relative w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto h-24 sm:h-32 lg:h-36 rounded-t-3xl overflow-hidden shadow-2xl border-b-4 border-[#5C4FFF]">
               <Image
                 src="/pc-guys.jpg"
                 alt="Tech Students"

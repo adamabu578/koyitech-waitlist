@@ -3,12 +3,14 @@
 import { useState } from 'react';
 
 export default function WaitlistForm() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !name) return;
 
     setStatus('loading');
     try {
@@ -17,7 +19,7 @@ export default function WaitlistForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ name, email, phone }),
       });
 
       if (!response.ok) {
@@ -25,7 +27,9 @@ export default function WaitlistForm() {
       }
 
       setStatus('success');
+      setName('');
       setEmail('');
+      setPhone('');
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
       console.error(error);
@@ -48,7 +52,26 @@ export default function WaitlistForm() {
           </div>
         </div>
       )}
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center w-full gap-3">
+      <form onSubmit={handleSubmit} className="flex flex-col w-full gap-3">
+        {/* Name Input */}
+        <div className="relative flex w-full bg-white border-2 border-gray-200 rounded-2xl focus-within:border-[#5C4FFF] focus-within:shadow-[0_8px_20px_rgba(92,79,255,0.15)] transition-all duration-300 overflow-hidden shadow-sm">
+          <div className="pl-5 pr-2 flex items-center text-gray-400">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Full Name"
+            required
+            disabled={status === 'loading'}
+            className="w-full bg-transparent text-[#181059] px-2 py-2 sm:py-2.5 outline-none placeholder:text-gray-400 font-bold focus:ring-0 disabled:opacity-50 text-sm sm:text-base"
+          />
+        </div>
+
+        {/* Email Input */}
         <div className="relative flex w-full bg-white border-2 border-gray-200 rounded-2xl focus-within:border-[#5C4FFF] focus-within:shadow-[0_8px_20px_rgba(92,79,255,0.15)] transition-all duration-300 overflow-hidden shadow-sm">
           <div className="pl-5 pr-2 flex items-center text-gray-400">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,17 +82,34 @@ export default function WaitlistForm() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email address..."
+            placeholder="Email Address"
             required
             disabled={status === 'loading'}
-            className="w-full bg-transparent text-[#181059] px-2 py-3 sm:py-4 outline-none placeholder:text-gray-400 font-bold focus:ring-0 disabled:opacity-50 text-base sm:text-lg"
+            className="w-full bg-transparent text-[#181059] px-2 py-2 sm:py-2.5 outline-none placeholder:text-gray-400 font-bold focus:ring-0 disabled:opacity-50 text-sm sm:text-base"
+          />
+        </div>
+
+        {/* Phone Input */}
+        <div className="relative flex w-full bg-white border-2 border-gray-200 rounded-2xl focus-within:border-[#5C4FFF] focus-within:shadow-[0_8px_20px_rgba(92,79,255,0.15)] transition-all duration-300 overflow-hidden shadow-sm">
+          <div className="pl-5 pr-2 flex items-center text-gray-400">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          </div>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Phone Number (Optional)"
+            disabled={status === 'loading'}
+            className="w-full bg-transparent text-[#181059] px-2 py-2 sm:py-2.5 outline-none placeholder:text-gray-400 font-bold focus:ring-0 disabled:opacity-50 text-sm sm:text-base"
           />
         </div>
         
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="w-full sm:w-auto bg-[#5C4FFF] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-black tracking-wide hover:bg-[#4b40e6] hover:shadow-[0_8px_20px_rgba(92,79,255,0.4)] hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center min-w-[140px] text-sm sm:text-base"
+          className="w-full bg-[#5C4FFF] text-white px-6 py-2.5 sm:py-3 mt-1 rounded-2xl font-black tracking-wide hover:bg-[#4b40e6] hover:shadow-[0_8px_20px_rgba(92,79,255,0.4)] hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center min-w-[140px] text-sm sm:text-base"
         >
           {status === 'loading' ? (
             <div className="w-5 h-5 border-4 border-white/20 border-t-white rounded-full animate-spin" />
