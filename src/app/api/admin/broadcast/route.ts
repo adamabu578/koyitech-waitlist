@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
     for (const batch of batches) {
       const emailPayloads = batch.map((sub) => ({
-        from: 'Koyitech Africa <hello@koyitech.africa>', // Replace with your verified domain
+        from: 'Koyitech Africa <info@koyitech.africa>', // Replace with your verified domain
         to: [sub.email],
         subject: subject,
         react: BroadcastEmail({ subject, body }) as React.ReactElement,

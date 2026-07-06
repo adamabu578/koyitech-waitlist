@@ -24,11 +24,12 @@ export async function POST(request: Request) {
         .insert([{ email, name, phone }]);
 
       if (dbError) {
+        if (dbError.code === '23505') {
+          return NextResponse.json({ error: 'This email is already on the waitlist!' }, { status: 409 });
+        }
+        
         console.error('Supabase insertion error:', dbError);
-        // Temporarily bypassing DB errors so user can test frontend modal
-        // if (dbError.code !== '23505') { 
-        //   return NextResponse.json({ error: 'Failed to add to waitlist' }, { status: 500 });
-        // }
+        return NextResponse.json({ error: 'Failed to add to waitlist' }, { status: 500 });
       }
     } else {
       console.warn("Supabase credentials missing, skipping database insertion");
@@ -44,14 +45,18 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     
     // Send email to the user who joined
-    await resend.emails.send({
-      from: 'Koyitech Africa <onboarding@resend.dev>', // Replace with your verified domain in production
+    const { data, error: resendError } = await resend.emails.send({
+      from: 'Koyitech Africa <info@koyitech.africa>',
       to: email,
       subject: 'Welcome to Koyitech Africa Waitlist! 🚀',
       react: WelcomeEmail(),
     });
 
-    return NextResponse.json({ success: true });
+    if (resendError) {
+      console.error('Resend email error:', resendError);
+    }
+
+    return NextResponse.json({ success: true, data, resendError });
   } catch (error: any) {
     console.error('Error in waitlist route:', error);
     return NextResponse.json(

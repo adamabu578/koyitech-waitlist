@@ -7,6 +7,7 @@ export default function WaitlistForm() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +24,10 @@ export default function WaitlistForm() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to join waitlist');
+        const errorData = await response.json().catch(() => ({}));
+        setErrorMessage(errorData.error || 'Failed to join waitlist');
+        setStatus('error');
+        return;
       }
 
       setStatus('success');
@@ -31,8 +35,8 @@ export default function WaitlistForm() {
       setEmail('');
       setPhone('');
       setTimeout(() => setStatus('idle'), 5000);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setErrorMessage(error.message || 'Something went wrong. Please try again.');
       setStatus('error');
     }
   };
@@ -119,7 +123,7 @@ export default function WaitlistForm() {
         </button>
       </form>
       {status === 'error' && (
-        <p className="text-red-500 text-sm mt-2 px-2">Something went wrong. Please try again.</p>
+        <p className="text-red-500 text-sm mt-2 px-2 text-center font-medium">{errorMessage}</p>
       )}
     </div>
   );

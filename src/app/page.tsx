@@ -111,6 +111,7 @@ export default function Home() {
                 src="/pc-guys.jpg"
                 alt="Tech Students"
                 fill
+                sizes="(max-width: 768px) 100vw, 512px"
                 className="object-cover hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#181059] to-transparent opacity-40"></div>
