@@ -7,6 +7,7 @@ import {
   Preview,
   Section,
   Text,
+  Img,
 } from '@react-email/components';
 import * as React from 'react';
 
@@ -29,7 +30,12 @@ export const BroadcastEmail = ({
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
-            <Text style={logo}>KOYITECH AFRICA</Text>
+            <Img
+              src="https://koyitech.africa/logo-white.png"
+              width="150"
+              alt="Koyitech Africa"
+              style={logoImage}
+            />
           </Section>
           
           <Section style={content}>
@@ -82,12 +88,8 @@ const header = {
   textAlign: 'center' as const,
 };
 
-const logo = {
-  color: '#ffffff',
-  fontSize: '24px',
-  fontWeight: 'bold',
-  letterSpacing: '2px',
-  margin: '0',
+const logoImage = {
+  margin: '0 auto',
 };
 
 const content = {

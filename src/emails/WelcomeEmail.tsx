@@ -8,6 +8,7 @@ import {
   Text,
   Heading,
   Hr,
+  Img,
 } from '@react-email/components';
 
 export const WelcomeEmail = () => {
@@ -16,6 +17,12 @@ export const WelcomeEmail = () => {
       <Head />
       <Body style={main}>
         <Container style={container}>
+          <Img
+            src="https://koyitech.africa/Koyitechafrica-logo.jpeg"
+            width="180"
+            alt="Koyitech Africa"
+            style={logoImage}
+          />
           <Heading style={heading}>Welcome to Koyitech Africa! 🚀</Heading>
           
           <Section style={section}>
@@ -60,13 +67,21 @@ const container = {
   maxWidth: '600px',
 };
 
+const logoImage = {
+  margin: '0 auto',
+  padding: '0',
+  display: 'block',
+};
+
 const heading = {
   fontSize: '24px',
   letterSpacing: '-0.5px',
   lineHeight: '1.3',
   fontWeight: '400',
   color: '#181059',
-  padding: '17px 0 0',
+  padding: '0',
+  margin: '0',
+  marginTop: '-40px', // Adjust this value (e.g. -20px, -60px) to decrease or increase the space
   textAlign: 'center' as const,
 };
 
