@@ -25,7 +25,9 @@ export default function WaitlistForm() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        setErrorMessage(errorData.error || 'Failed to join waitlist');
+        setErrorMessage(
+          errorData.error || `Failed to join Cohort I (HTTP ${response.status})`
+        );
         setStatus('error');
         return;
       }
@@ -118,7 +120,7 @@ export default function WaitlistForm() {
           {status === 'loading' ? (
             <div className="w-5 h-5 border-4 border-white/20 border-t-white rounded-full animate-spin" />
           ) : (
-            'JOIN WAITLIST'
+            'JOIN COHORT I'
           )}
         </button>
       </form>

@@ -24,8 +24,12 @@ export default async function AdminWaitlistPage() {
         .order('created_at', { ascending: false });
 
       if (error) {
+        console.error('Supabase fetch error:', error);
         if (error.code === '42P01') {
           errorMsg = "The 'waitlist' table does not exist in your Supabase database yet.";
+        } else if (error.details?.includes('ENOTFOUND')) {
+          const hostname = new URL(supabaseUrl).hostname;
+          errorMsg = `Cannot reach Supabase (${hostname} — DNS lookup failed). Your Supabase project is likely paused or deleted in the Supabase Dashboard, or your network/DNS connection is offline.`;
         } else {
           errorMsg = `Failed to fetch subscribers: ${error.message}`;
         }

@@ -17,7 +17,9 @@ export async function POST(request: Request) {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
     if (supabaseUrl && supabaseKey) {
-      const supabase = createClient(supabaseUrl, supabaseKey);
+      const supabase = createClient(supabaseUrl, supabaseKey, {
+        auth: { persistSession: false, autoRefreshToken: false },
+      });
       
       const { error: dbError } = await supabase
         .from('waitlist')
@@ -25,11 +27,17 @@ export async function POST(request: Request) {
 
       if (dbError) {
         if (dbError.code === '23505') {
-          return NextResponse.json({ error: 'This email is already on the waitlist!' }, { status: 409 });
+          return NextResponse.json({ error: 'This email has already joined Cohort I!' }, { status: 409 });
         }
         
-        console.error('Supabase insertion error:', dbError);
-        return NextResponse.json({ error: 'Failed to add to waitlist' }, { status: 500 });
+        console.error('Supabase insertion error:', dbError.message, dbError.details);
+        if (dbError.details?.includes('ENOTFOUND') || dbError.message?.includes('fetch failed')) {
+          return NextResponse.json(
+            { error: 'Cannot reach the database right now. Please check your connection and try again.' },
+            { status: 503 }
+          );
+        }
+        return NextResponse.json({ error: dbError.message || 'Failed to join Cohort I' }, { status: 500 });
       }
     } else {
       console.warn("Supabase credentials missing, skipping database insertion");
