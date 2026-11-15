@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { WelcomeEmail } from '@/emails/WelcomeEmail';
 import { createClient } from '@supabase/supabase-js';
-import { recordStudentInWaitlistDb } from '@/lib/enrolledStudents';
+import { getLmsSupabaseConfig, recordStudentInWaitlistDb } from '@/lib/enrolledStudents';
 
 const DEFAULT_LOGIN_URL = 'https://koyitech.africa/login';
 
@@ -31,18 +31,7 @@ export async function POST(request: Request) {
     const lastName = nameParts.slice(1).join(' ') || '';
 
     // 1. Create student account & auto-enroll in Koyitech Africa's main LMS Supabase project
-    const lmsUrl = process.env.LMS_SUPABASE_URL;
-    const lmsAnonKey = process.env.LMS_SUPABASE_ANON_KEY;
-
-    if (!lmsUrl || !lmsAnonKey) {
-      return NextResponse.json(
-        {
-          error:
-            'Classroom authentication is not configured (LMS_SUPABASE_URL / LMS_SUPABASE_ANON_KEY missing). Please restart your dev server if .env.local was recently updated.',
-        },
-        { status: 500 }
-      );
-    }
+    const { lmsUrl, lmsAnonKey } = getLmsSupabaseConfig();
 
     {
       const lmsSupabase = createClient(lmsUrl, lmsAnonKey, {

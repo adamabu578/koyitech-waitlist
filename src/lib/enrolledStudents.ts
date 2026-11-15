@@ -16,6 +16,23 @@ const DEFAULT_COURSE = 'Computer & IT Fundamentals';
 const DEFAULT_COHORT = 'Cohort I';
 const COURSE_MATCH_KEY = 'computer & it fundamentals';
 
+const DEFAULT_LMS_SUPABASE_URL = 'https://tvlzkkrewfoksgdmccpr.supabase.co';
+const DEFAULT_LMS_SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2bHpra3Jld2Zva3NnZG1jY3ByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyNDczNjksImV4cCI6MjA5MjgyMzM2OX0.Uxoc4O_aaReAWjKgnNPXc28UuZwqHHrGX5NZoGija-s';
+
+export function getLmsSupabaseConfig() {
+  return {
+    lmsUrl:
+      process.env.LMS_SUPABASE_URL ||
+      process.env.NEXT_PUBLIC_LMS_SUPABASE_URL ||
+      DEFAULT_LMS_SUPABASE_URL,
+    lmsAnonKey:
+      process.env.LMS_SUPABASE_ANON_KEY ||
+      process.env.NEXT_PUBLIC_LMS_SUPABASE_ANON_KEY ||
+      DEFAULT_LMS_SUPABASE_ANON_KEY,
+  };
+}
+
 function isFreeTrainingCourse(value?: string | null): boolean {
   return Boolean(value && value.toLowerCase().includes(COURSE_MATCH_KEY));
 }
@@ -120,8 +137,7 @@ export async function getEnrolledStudents(): Promise<{
   const waitlistServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const waitlistKey = waitlistServiceKey || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  const lmsUrl = process.env.LMS_SUPABASE_URL;
-  const lmsAnonKey = process.env.LMS_SUPABASE_ANON_KEY;
+  const { lmsUrl, lmsAnonKey } = getLmsSupabaseConfig();
 
   if ((!waitlistUrl || !waitlistKey) && (!lmsUrl || !lmsAnonKey)) {
     return {
