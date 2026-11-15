@@ -55,7 +55,7 @@ export const BroadcastEmail = ({
           
           <Section style={footer}>
             <Text style={footerText}>
-              You received this email because you are on the Koyitech Africa waitlist.
+              You received this email because you registered for Koyitech Africa&apos;s Computer &amp; IT Fundamentals (Cohort I).
               <br />
               © {new Date().getFullYear()} Koyitech Africa. All rights reserved.
             </Text>

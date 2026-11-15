@@ -2,19 +2,34 @@ import * as React from 'react';
 import {
   Html,
   Head,
+  Preview,
   Body,
   Container,
   Section,
   Text,
   Heading,
+  Button,
   Hr,
   Img,
 } from '@react-email/components';
 
-export const WelcomeEmail = () => {
+interface WelcomeEmailProps {
+  name?: string;
+  email?: string;
+  loginUrl?: string;
+}
+
+export const WelcomeEmail = ({
+  name,
+  email,
+  loginUrl = 'https://koyitech.africa/login',
+}: WelcomeEmailProps = {}) => {
   return (
     <Html>
       <Head />
+      <Preview>
+        Your Cohort I student account is ready — log in to Koyitech Africa and attend your free Computer &amp; IT Fundamentals classes!
+      </Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -23,25 +38,35 @@ export const WelcomeEmail = () => {
             alt="Koyitech Africa"
             style={logoImage}
           />
-          <Heading style={heading}>Welcome to Koyitech Africa! 🚀</Heading>
-          
+          <Heading style={heading}>Welcome to Cohort I! 🚀</Heading>
+
           <Section style={section}>
             <Text style={text}>
-              Hi there,
+              Hi {name ? name : 'there'},
             </Text>
             <Text style={text}>
-              Thank you for joining our waitlist. You are now on the priority list for our upcoming cohort and have claimed your exclusive 50% early-bird discount on all courses.
+              Congratulations! Your student account for Koyitech Africa&apos;s <strong>Free Computer &amp; IT Fundamentals</strong> program (Cohort I) has been created.
             </Text>
 
             <Text style={text}>
-              We're thrilled to have you onboard. Keep an eye on your inbox, as we'll notify you as soon as the cohort officially opens!
+              You can now log in anytime using {email ? <strong>{email}</strong> : 'your registered email address'} and the password you created during registration to access your dashboard and attend live classes.
+            </Text>
+
+            <Section style={buttonContainer}>
+              <Button style={button} href={loginUrl}>
+                Login &amp; Attend Classes
+              </Button>
+            </Section>
+
+            <Text style={text}>
+              Throughout this 100% free training, you&apos;ll gain hands-on skills in computer operations, office productivity suites, internet &amp; cloud tools, and everyday IT troubleshooting. We&apos;re excited to see you in class!
             </Text>
           </Section>
 
           <Hr style={hr} />
-          
+
           <Text style={footer}>
-            Koyitech Africa - Master high-demand skills, build real-world projects, and get mentored by industry experts.
+            Koyitech Africa — Empowering Africa with practical digital and technology skills.
           </Text>
         </Container>
       </Body>
@@ -77,11 +102,11 @@ const heading = {
   fontSize: '24px',
   letterSpacing: '-0.5px',
   lineHeight: '1.3',
-  fontWeight: '400',
+  fontWeight: '700',
   color: '#181059',
   padding: '0',
   margin: '0',
-  marginTop: '-40px', // Adjust this value (e.g. -20px, -60px) to decrease or increase the space
+  marginTop: '-40px',
   textAlign: 'center' as const,
 };
 
@@ -94,6 +119,23 @@ const text = {
   fontSize: '16px',
   lineHeight: '24px',
   textAlign: 'left' as const,
+};
+
+const buttonContainer = {
+  textAlign: 'center' as const,
+  margin: '28px 0',
+};
+
+const button = {
+  backgroundColor: '#5C4FFF',
+  borderRadius: '10px',
+  color: '#ffffff',
+  fontSize: '15px',
+  fontWeight: '700',
+  textDecoration: 'none',
+  textAlign: 'center' as const,
+  display: 'inline-block',
+  padding: '14px 28px',
 };
 
 const hr = {

@@ -41,10 +41,10 @@ export default function CountdownTimer() {
 
   if (!mounted) {
     return (
-      <div className="flex gap-2 sm:gap-3 items-center opacity-50">
+      <div className="flex gap-2 sm:gap-2.5 items-center opacity-50">
         {[...Array(4)].map((_, i) => (
           <div key={i} className="flex flex-col items-center">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white/40 rounded-2xl" />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/40 rounded-xl" />
           </div>
         ))}
       </div>
@@ -52,13 +52,13 @@ export default function CountdownTimer() {
   }
 
   return (
-    <div className="flex gap-2 sm:gap-3 items-center">
+    <div className="flex gap-1.5 sm:gap-2.5 items-center">
       <TimeUnit value={timeLeft.days} label="Days" />
-      <span className="text-2xl font-black text-white/50 pb-5 animate-pulse">:</span>
+      <span className="text-xl sm:text-2xl font-black text-white/50 pb-4 animate-pulse">:</span>
       <TimeUnit value={timeLeft.hours} label="Hrs" />
-      <span className="text-2xl font-black text-white/50 pb-5 animate-pulse">:</span>
+      <span className="text-xl sm:text-2xl font-black text-white/50 pb-4 animate-pulse">:</span>
       <TimeUnit value={timeLeft.minutes} label="Min" />
-      <span className="text-2xl font-black text-white/50 pb-5 animate-pulse">:</span>
+      <span className="text-xl sm:text-2xl font-black text-white/50 pb-4 animate-pulse">:</span>
       <TimeUnit value={timeLeft.seconds} label="Sec" />
     </div>
   );
@@ -67,13 +67,13 @@ export default function CountdownTimer() {
 function TimeUnit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-2xl flex items-center justify-center shadow-[0_8px_16px_rgba(24,16,89,0.2)] relative overflow-hidden group">
+      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-xl flex items-center justify-center shadow-[0_8px_16px_rgba(24,16,89,0.2)] relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50"></div>
-        <span className="text-2xl sm:text-3xl font-black text-[#5C4FFF] relative z-10">
+        <span className="text-xl sm:text-2xl font-black text-[#5C4FFF] relative z-10">
           {value.toString().padStart(2, '0')}
         </span>
       </div>
-      <span className="text-[10px] sm:text-xs font-bold text-white/90 mt-2 uppercase tracking-widest drop-shadow-sm">{label}</span>
+      <span className="text-[10px] font-bold text-white/90 mt-1 uppercase tracking-widest drop-shadow-sm">{label}</span>
     </div>
   );
 }

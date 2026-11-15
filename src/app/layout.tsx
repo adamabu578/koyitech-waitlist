@@ -8,8 +8,8 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Koyitech Africa",
-  description: "Join Africa's premier technology academy.",
+  title: "Koyitech Africa | Free Computer & IT Fundamentals",
+  description: "Join Cohort I of Koyitech Africa's 100% free Computer & IT Fundamentals training.",
 };
 
 export default function RootLayout({
