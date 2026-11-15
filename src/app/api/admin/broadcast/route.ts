@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 import BroadcastEmail from '@/emails/BroadcastEmail';
+import { getEnrolledStudents } from '@/lib/enrolledStudents';
 
 export async function POST(request: Request) {
   try {
@@ -14,30 +14,21 @@ export async function POST(request: Request) {
       );
     }
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     const resendApiKey = process.env.RESEND_API_KEY;
 
-    if (!supabaseUrl || !supabaseKey) {
-      return NextResponse.json({ error: 'Supabase credentials are not configured' }, { status: 500 });
-    }
+    // 1. Fetch all enrolled students (Waitlist DB + Koyitech Africa LMS)
+    const { students: subscribers, errorMsg } = await getEnrolledStudents();
 
-    // 1. Fetch all waitlist emails
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data: subscribers, error: dbError } = await supabase
-      .from('waitlist')
-      .select('email');
-
-    if (dbError) {
+    if (errorMsg) {
       return NextResponse.json(
-        { error: `Database error: ${dbError.message}` },
+        { error: errorMsg },
         { status: 500 }
       );
     }
 
     if (!subscribers || subscribers.length === 0) {
       return NextResponse.json(
-        { error: 'No subscribers found on the waitlist.' },
+        { error: 'No enrolled students found.' },
         { status: 400 }
       );
     }

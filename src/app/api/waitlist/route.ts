@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { WelcomeEmail } from '@/emails/WelcomeEmail';
 import { createClient } from '@supabase/supabase-js';
+import { recordStudentInWaitlistDb } from '@/lib/enrolledStudents';
 
 const DEFAULT_LOGIN_URL = 'https://koyitech.africa/login';
 
@@ -188,28 +189,8 @@ export async function POST(request: Request) {
       }
     }
 
-    // 2. Also record the student in the waitlist Supabase database (for /admin & broadcast emails)
-    const waitlistUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const waitlistServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    const waitlistKey = waitlistServiceKey || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (waitlistUrl && waitlistKey) {
-      const waitlistSupabase = createClient(waitlistUrl, waitlistKey, {
-        auth: { persistSession: false, autoRefreshToken: false },
-      });
-
-      const { error: dbError } = waitlistServiceKey
-        ? await waitlistSupabase
-            .from('waitlist')
-            .upsert([{ email, name: trimmedName, phone }], { onConflict: 'email' })
-        : await waitlistSupabase
-            .from('waitlist')
-            .insert([{ email, name: trimmedName, phone }]);
-
-      if (dbError && dbError.code !== '23505') {
-        console.error('Waitlist DB insertion warning:', dbError.message, dbError.details);
-      }
-    }
+    // 2. Record the enrolled student in the waitlist Supabase database (for /admin & broadcast emails)
+    await recordStudentInWaitlistDb({ email, name: trimmedName, phone });
 
     // 3. Send Welcome + Classroom Login email via Resend
     if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your_resend_api_key') {

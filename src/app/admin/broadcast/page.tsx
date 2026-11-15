@@ -45,15 +45,18 @@ export default function BroadcastPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl tracking-tight">
-          Broadcast Email
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#5C4FFF]/10 px-3 py-1 text-xs font-extrabold text-[#5C4FFF] uppercase tracking-wider mb-2">
+          Cohort I &bull; Computer &amp; IT Fundamentals
+        </span>
+        <h1 className="text-2xl font-black text-[#181059] sm:text-3xl tracking-tight">
+          Broadcast to Enrolled Students
         </h1>
-        <p className="mt-2 text-sm text-gray-500">
-          Compose and send an email to everyone on the waitlist.
+        <p className="mt-1.5 text-sm text-slate-500">
+          Compose and send class schedules, announcements, or study resources to everyone enrolled in Computer &amp; IT Fundamentals.
         </p>
       </div>
 
-      <div className="bg-white shadow-sm ring-1 ring-black ring-opacity-5 rounded-xl overflow-hidden p-6 sm:p-8">
+      <div className="bg-white border border-slate-200/90 shadow-[0_4px_24px_rgba(24,16,89,0.05)] rounded-2xl overflow-hidden p-6 sm:p-8">
         {status === 'success' ? (
           <div className="text-center py-8">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
@@ -62,7 +65,7 @@ export default function BroadcastPage() {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Broadcast Sent Successfully!</h3>
-            <p className="text-gray-500 mb-6">Your message was sent to {successCount} subscribers.</p>
+            <p className="text-gray-500 mb-6">Your message was sent to {successCount} enrolled students.</p>
             <button
               onClick={() => setStatus('idle')}
               className="bg-gray-100 text-gray-700 font-medium px-6 py-2.5 rounded-lg hover:bg-gray-200 transition-colors"
